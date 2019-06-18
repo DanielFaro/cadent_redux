@@ -1,8 +1,10 @@
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
 
-const ListSelection = () => (
+const ListSelection = ({ selectedItem }) => (
   <div className="listSelection">
-    ListSelection
+    <Typography variant="h6" id="tableTitle">Selection</Typography>
+    {selectedItem.name}
   </div>
 );
 

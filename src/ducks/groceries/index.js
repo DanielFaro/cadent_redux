@@ -47,6 +47,8 @@ export const initialState = {
 // Reducers
 export default function reducer(state = initialState, action) {
   const { type, payload } = action;
+  console.log('action type ', type)
+  console.log('payload: ', payload);
 
   switch (type) {
     case ADD_ITEM:
@@ -55,16 +57,22 @@ export default function reducer(state = initialState, action) {
       });
 
     case REMOVE_ITEM:
-      // Write a custom reducer that will remove an item from the list array
-      return state; 
-
+      let stateCopy = state.list.slice(0);
+      console.log(stateCopy);
+      let newState = stateCopy.filter(item => item.id !== state.selectedItem.id);
+      return update(state, {
+        list: { $set: newState }
+      });
     case SELECT_ITEM:
-      // Write a custom reducer that will select an item
-      return state;
-
+      return update(state, {
+        isItemSelected: { $set: true },
+        selectedItem: { $set: payload }
+      });
     case DESELECT_ITEM:
-      // Write a customer reducer that will deselect an item
-      return state;
+      return update(state, {
+        isItemSelected: { $set: false },
+        selectedItem: { $set: initialState.selectedItem }
+      })
 
     default:
       return state;
@@ -76,3 +84,16 @@ export const addItem = item => ({
   type: ADD_ITEM,
   payload: item,
 });
+
+export const removeItem = () => ({
+  type: REMOVE_ITEM
+});
+
+export const selectItem = item => ({
+  type: SELECT_ITEM,
+  payload: item,
+})
+
+export const deselectItem = () => ({
+  type: DESELECT_ITEM,
+})

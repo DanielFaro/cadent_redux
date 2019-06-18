@@ -5,18 +5,15 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '40%',
+    width: '80%',
     marginTop: theme.spacing(3),
-    overflowX: 'auto',
   },
   table: {
     maxWidth: 600,
@@ -28,15 +25,6 @@ export const ListTable = ({ ...props }) => {
   const classes = useStyles();
 
   const createRow = (item) => {
-    // const [state, setState] = React.useState({
-    //   checkedA: false,
-    // });
-  
-    // const handleChange = name => event => {
-    //   setState({ ...state, [name]: event.target.checked });
-    // };
-  console.log(props);
-  console.log(item);
     return (
       <TableRow>
         <TableCell>
@@ -48,14 +36,6 @@ export const ListTable = ({ ...props }) => {
             disabled={props.isItemSelected && item.id !== props.selectedItem.id}
             onClick={() => props.selectItem(item)}
           />
-          {/* <Button
-            variant="contained"
-            color="primary"
-            disabled={props.isItemSelected}
-            onClick={() => props.selectItem(item)}
-            >
-            Select  
-          </Button> */}
         </TableCell>
       </TableRow>
     )

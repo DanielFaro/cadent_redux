@@ -47,8 +47,6 @@ export const initialState = {
 // Reducers
 export default function reducer(state = initialState, action) {
   const { type, payload } = action;
-  console.log('action type ', type)
-  console.log('payload: ', payload);
 
   switch (type) {
     case ADD_ITEM:
@@ -58,7 +56,6 @@ export default function reducer(state = initialState, action) {
 
     case REMOVE_ITEM:
       let stateCopy = state.list.slice(0);
-      console.log(stateCopy);
       let newState = stateCopy.filter(item => item.id !== state.selectedItem.id);
       return update(state, {
         list: { $set: newState }

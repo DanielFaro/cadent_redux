@@ -1,38 +1,47 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import Grid from "@material-ui/core/Grid";
 
-import { addItem, removeItem, deselectItem, selectItem } from '../ducks/groceries';
+import {
+  addItem,
+  removeItem,
+  deselectItem,
+  selectItem
+} from "../ducks/groceries";
 
-import ListInputs from './ListInputs';
-import ListSelection from './ListSelection';
-import ListTable from './ListTable';
-
-
+import ListInputs from "./ListInputs";
+import ListSelection from "./ListSelection";
+import ListTable from "./ListTable";
 
 class ListContainer extends Component {
-  componentWillMount() {
-    /* eslint-disable no-console */
-    console.log('groceryList', this.props.groceryList, this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log('groceryList', nextProps.groceryList, this);
-  }
 
   render() {
-    const { groceryList, addItem, selectedItem, selectItem, deselectItem, removeItem, isItemSelected } = this.props;
+    const {
+      groceryList,
+      addItem,
+      selectedItem,
+      selectItem,
+      deselectItem,
+      removeItem,
+      isItemSelected
+    } = this.props;
     console.log(groceryList);
     console.log(selectedItem);
     return (
-    
-      <section className="groceryApp">
-        <div className="listInputs">
-          <ListInputs addItem={addItem} />
-        </div>
-        <div className="types">
-          <ListSelection selectedItem={selectedItem}/>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        spacing={2}
+        style={{ flexGrow: 1 }}
+      >
+        <Grid item sm>
+          <ListSelection selectedItem={selectedItem} />
+        </Grid>
+        <Grid item sm>
           <ListTable
             groceryList={groceryList}
             selectItem={selectItem}
@@ -40,9 +49,12 @@ class ListContainer extends Component {
             removeItem={removeItem}
             isItemSelected={isItemSelected}
             selectedItem={selectedItem}
-            />
-        </div>
-      </section>
+          />
+        </Grid>
+        <Grid item sm>
+          <ListInputs addItem={addItem} />
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -56,29 +68,32 @@ ListContainer.propTypes = {
   deselectItem: PropTypes.func.isRequired,
   // Store
   groceryList: PropTypes.array.isRequired,
+  selectedItem: PropTypes.object.isRequired,
+  isItemSelected: PropTypes.bool.isRequired,
   // Other
 };
 
 const mapStateToProps = ({
-  groceries: {
-    list: groceryList,
-    selectedItem,
-    isItemSelected,
-  },
+  groceries: { list: groceryList, selectedItem, isItemSelected }
 }) => ({
   groceryList,
   selectedItem,
-  isItemSelected,
+  isItemSelected
 });
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
-    addItem,
-    removeItem,
-    selectItem,
-    deselectItem
-  }, dispatch)
-);
-const ListContainerRedux = connect(mapStateToProps, mapDispatchToProps)(ListContainer);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      addItem,
+      removeItem,
+      selectItem,
+      deselectItem
+    },
+    dispatch
+  );
+const ListContainerRedux = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ListContainer);
 
 export default ListContainerRedux;
